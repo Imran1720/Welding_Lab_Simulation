@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 840c430af23374c4a9726f9bc0c4c8b5
+guid: f26b1d6bc8a6098418a8ce28e4e7aa35
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
@@ -7,13 +7,13 @@ ModelImporter:
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
-      name: Metal
-    second: {fileID: 2100000, guid: b6db1da42585e4b4ea03856df1c73b96, type: 2}
+      name: Messing
+    second: {fileID: 2100000, guid: a207674b9d9b6c849942af081b2ac396, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
-      name: Metal2
-    second: {fileID: 2100000, guid: d584357115176fb4caee3765de5d5e4c, type: 2}
+      name: Steel_brushed01
+    second: {fileID: 2100000, guid: 4961cb453eefa8f4d9628a2a8aaf7cfe, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
@@ -24,7 +24,7 @@ ModelImporter:
     bakeSimulation: 0
     resampleCurves: 1
     optimizeGameObjects: 0
-    removeConstantScaleCurves: 1
+    removeConstantScaleCurves: 0
     motionNodeName: 
     rigImportErrors: 
     rigImportWarnings: 
@@ -111,7 +111,7 @@ ModelImporter:
   humanoidOversampling: 1
   avatarSetup: 0
   addHumanoidExtraRootOnlyWhenUsingAvatar: 1
-  importBlendShapeDeformPercent: 0
+  importBlendShapeDeformPercent: 1
   remapMaterialsIfMaterialImportModeIsNone: 0
   additionalBone: 0
   userData: 

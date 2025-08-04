@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 840c430af23374c4a9726f9bc0c4c8b5
+guid: 02e679be4d7a23f4fa4f0dbb2d62b69b
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
@@ -8,12 +8,23 @@ ModelImporter:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
       name: Metal
-    second: {fileID: 2100000, guid: b6db1da42585e4b4ea03856df1c73b96, type: 2}
+    second: {fileID: 2100000, guid: ed56cd885ec9ddd40bdd7440e456021a, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
-      name: Metal2
-    second: {fileID: 2100000, guid: d584357115176fb4caee3765de5d5e4c, type: 2}
+      name: Plastic
+    second: {fileID: -389402008792246631, guid: d9d36b07cb247824b9754cea3e7d6819,
+      type: 3}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Shading
+    second: {fileID: 2100000, guid: 4359942d79577034ca02fd1a5318d80f, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Structural1
+    second: {fileID: 2100000, guid: 4359942d79577034ca02fd1a5318d80f, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
