@@ -5,11 +5,11 @@ using UnityEngine;
 public class EventService
 {
     public EventController gasKnobToggled;
-    public EventController<bool> InteractingWIthKnob;
+    public EventController<bool> InteractingWithKnob;
 
     public EventService()
     {
         gasKnobToggled = new EventController();
-        InteractingWIthKnob = new EventController<bool>();
+        InteractingWithKnob = new EventController<bool>();
     }
 }

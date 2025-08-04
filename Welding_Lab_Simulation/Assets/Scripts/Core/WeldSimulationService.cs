@@ -1,15 +1,12 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class WeldSimulationService : MonoBehaviour
 {
     public static WeldSimulationService Instance { get; private set; }
 
-    private EventService eventService;
-
     [SerializeField] private GasKnobHandler gasKnobHandler;
 
+    private EventService eventService;
 
     private void Awake()
     {
