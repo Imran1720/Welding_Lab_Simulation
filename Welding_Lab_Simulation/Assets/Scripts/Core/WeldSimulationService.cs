@@ -6,8 +6,9 @@ public class WeldSimulationService : MonoBehaviour
 {
     public static WeldSimulationService Instance { get; private set; }
 
-
     private EventService eventService;
+
+    [SerializeField] private GasKnobHandler gasKnobHandler;
 
 
     private void Awake()
