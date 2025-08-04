@@ -11,9 +11,9 @@ A simple VR-based welding simulation built in Unity using **XR Interaction Toolk
 Each functionality below will be implemented in a **separate branch**. Once completed and tested, it will be checked off here.
 
 ### ✅ System: XR Setup
-- [ ] XR Origin prefab setup (Camera, Hands, Input Actions)
-- [ ] XR Device Simulator integrated and working
-- [ ] Interaction Profiles created
+- [x] XR Origin prefab setup (Camera, Hands, Input Actions)
+- [x] XR Device Simulator integrated and working
+- [x] Interaction Profiles created
 
 ---
 
