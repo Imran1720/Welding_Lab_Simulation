@@ -24,8 +24,8 @@ Each functionality below will be implemented in a **separate branch**. Once comp
 ---
 
 ### ✅ System: Gas Cylinder
-- [ ] Interactable gas cylinder with ON/OFF toggle
-- [ ] Visual indicator for gas flow status
+- [x] Interactable gas cylinder with ON/OFF toggle
+- [x] Visual indicator for gas flow status
 
 ---
 
