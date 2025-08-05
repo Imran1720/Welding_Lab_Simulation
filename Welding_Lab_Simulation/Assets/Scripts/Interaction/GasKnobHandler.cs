@@ -51,4 +51,5 @@ public class GasKnobHandler : MonoBehaviour
     public void StopRotation() => rotationtimer = 0;
     public void StartBlinking() => blinker.StartBlinking();
     public ToggleState GetToggleState() => currentToggleState;
+    public bool IsGasOn() => isGasOn;
 }

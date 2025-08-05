@@ -26,4 +26,6 @@ public class WeldSimulationService : MonoBehaviour
     }
 
     public EventService GetEventService() => eventService;
+
+    public GasKnobHandler GetGasKnobHandler() => gasKnobHandler;
 }

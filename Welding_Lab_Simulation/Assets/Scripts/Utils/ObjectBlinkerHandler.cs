@@ -50,4 +50,11 @@ public class ObjectBlinkerHandler
         remainingBlinks = totalBlinks;
         timer = blinkInterval;
     }
+
+    public void StopBlinking()
+    {
+        meshRenderer.material = defaultMaterial;
+        remainingBlinks = 0;
+        timer = 0;
+    }
 }

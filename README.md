@@ -30,9 +30,9 @@ Each functionality below will be implemented in a **separate branch**. Once comp
 ---
 
 ### ✅ System: Power Control (Current Output)
-- [ ] Interactable knob or slider
-- [ ] Map value to welding power (0–100%)
-- [ ] Display current value on UI
+- [x] Interactable knob or slider
+- [x] Map value to welding power (0–100%)
+- [x] Display current value on UI
 
 ---
 
