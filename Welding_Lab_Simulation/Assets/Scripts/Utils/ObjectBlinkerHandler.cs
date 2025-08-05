@@ -28,7 +28,6 @@ public class ObjectBlinkerHandler
 
         timer -= Time.deltaTime;
 
-
         if (timer <= 0)
         {
             timer = blinkInterval;
@@ -47,14 +46,14 @@ public class ObjectBlinkerHandler
 
     public void StartBlinking()
     {
-        remainingBlinks = totalBlinks;
         timer = blinkInterval;
+        remainingBlinks = totalBlinks;
     }
 
     public void StopBlinking()
     {
-        meshRenderer.material = defaultMaterial;
-        remainingBlinks = 0;
         timer = 0;
+        remainingBlinks = 0;
+        meshRenderer.material = defaultMaterial;
     }
 }

@@ -1,19 +1,41 @@
-using System;
-using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
 public class PowerRegulatorHandler : MonoBehaviour
 {
-    [SerializeField] private float rotationSpeed;
+    [Header("Rotation Settings")]
+    [SerializeField] private float rotationSpeed = 50f;
+
+    [Header("UI References")]
     [SerializeField] private TextMeshProUGUI powerText;
-    [SerializeField] BlinkHandlerData blinkHandlerData;
 
+    [Header("Blink Settings")]
+    [SerializeField] private BlinkHandlerData blinkHandlerData;
 
-    private int rotationDelta = 1;
-    private PowerLevel currentPowerLevel;
+    private EventService eventService;
+
     private ObjectBlinkerHandler blinkerHandler;
+    private PowerLevel currentPowerLevel = PowerLevel.LOW;
+    private int rotationDelta = 1;
+    private bool isGasOn;
+
+    private Dictionary<PowerLevel, int> powerLevelAngles = new Dictionary<PowerLevel, int>()
+    {
+        { PowerLevel.LOW,80},
+        { PowerLevel.MEDIUM,150},
+        { PowerLevel.HIGH,250}
+    };
+
+    public void AddEvents(EventService eventService)
+    {
+        eventService.GasOnTrigger.AddEventListener(GasOnTriggered);
+    }
+
+    public void RemoveEvents(EventService eventService)
+    {
+        eventService.GasOnTrigger.RemoveEventListener(GasOnTriggered);
+    }
 
     private void Start()
     {
@@ -29,63 +51,45 @@ public class PowerRegulatorHandler : MonoBehaviour
 
     private void UpdatePowerRegulator()
     {
-
-        switch (currentPowerLevel)
+        if (!isGasOn)
         {
-            case PowerLevel.LOW:
-            default:
-                RotateRegulatorTo(80);
-                break;
-            case PowerLevel.MEDIUM:
-                RotateRegulatorTo(150);
-                break;
-            case PowerLevel.HIGH:
-                RotateRegulatorTo(250);
-                break;
+            SetPowerUIText(0);
+            return;
         }
+
+        RotateRegulatorTo(powerLevelAngles[currentPowerLevel]);
     }
 
     private void RotateRegulatorTo(float targetRotation)
     {
-        if (!WeldSimulationService.Instance.GetGasKnobHandler().IsGasOn())
-        {
-            powerText.text = "" + 0;
-            return;
-        }
         if (Mathf.Abs(transform.localEulerAngles.y - targetRotation) <= 1f)
         {
+            SetPowerUIText(powerLevelAngles[currentPowerLevel]);
             return;
         }
         rotationDelta = transform.localEulerAngles.y - targetRotation <= 0 ? 1 : -1;
         transform.Rotate(0, rotationSpeed * Time.deltaTime * rotationDelta, 0, Space.Self);
-        powerText.text = "" + (int)transform.localEulerAngles.y;
-    }
-
-    public void StopRegulatorBlinking()
-    {
-        blinkerHandler.StopBlinking();
+        SetPowerUIText((int)transform.localEulerAngles.y);
     }
 
     public void ChangePowerLevel()
     {
-        if (!WeldSimulationService.Instance.GetGasKnobHandler().IsGasOn())
+        if (!isGasOn)
         {
-            WeldSimulationService.Instance.GetGasKnobHandler().StartBlinking();
+            WeldSimulationService.Instance.BlinkGasKnob();
             return;
         }
         currentPowerLevel++;
-        if ((int)currentPowerLevel > 3)
+        if ((int)currentPowerLevel > 2)
         {
             currentPowerLevel = 0;
         }
     }
 
-    public void BlinkGasKnob()
-    {
-        GasKnobHandler gasKnobHandler = WeldSimulationService.Instance.GetGasKnobHandler();
-        if (!gasKnobHandler.IsGasOn())
-        {
-            gasKnobHandler.StartBlinking();
-        }
-    }
+    private void GasOnTriggered(bool isGasOn) => this.isGasOn = isGasOn;
+    private void SetPowerUIText(int value) => powerText.text = "" + value;
+
+    public void StopRegulatorBlinking() => blinkerHandler.StopBlinking();
+    public void BlinkGasKnob() => WeldSimulationService.Instance.BlinkGasKnob();
+
 }
