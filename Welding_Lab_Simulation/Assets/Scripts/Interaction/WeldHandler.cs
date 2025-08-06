@@ -1,54 +1,58 @@
-using System.Collections;
-using System.Collections.Generic;
+using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.XR;
 
 public class WeldHandler : MonoBehaviour
 {
-    private Transform weldDragpoint;
+    [Header("Settings")]
     [SerializeField] private BlinkHandlerData blinkHandlerData;
     [SerializeField] private InputActionProperty primaryButtonAction;
-    private PowerLevel currentPowerLevel;
-    private WeldZoneHandler weldZoneHandler;
 
+    // State
+    private PowerLevel currentPowerLevel;
     private bool canWeld;
-    private bool isWelding = false;
-    private bool isGasOn = false;
+    private bool isWelding;
+    private bool isGasOn;
+
+    // References
+    private Transform weldDragPoint;
+    private EventService eventService;
+    private ParticleSystem weldParticles;
+    private WeldZoneHandler weldZoneHandler;
     private ObjectBlinkerHandler blinkerHandler;
 
     private void Start()
     {
         blinkerHandler = new ObjectBlinkerHandler(blinkHandlerData);
+        eventService = WeldSimulationService.Instance.GetEventService();
 
-        WeldSimulationService.Instance.GetEventService().OnPowerLevelChanged.AddEventListener(OnPowerLevelChanged);
-        WeldSimulationService.Instance.GetEventService().GasOnTrigger.AddEventListener(GasOnTriggered);
+        eventService.GasOnTrigger.AddEventListener(GasOnTriggered);
+        eventService.OnPowerLevelChanged.AddEventListener(OnPowerLevelChanged);
     }
 
     private void OnEnable()
     {
+        primaryButtonAction.action.canceled += OnPrimaryActionReleased;
         primaryButtonAction.action.performed += OnPrimaryActionTriggered;
-        primaryButtonAction.action.canceled += OnPrimaryActionLeft;
     }
 
     private void OnDisable()
     {
+        primaryButtonAction.action.canceled -= OnPrimaryActionReleased;
         primaryButtonAction.action.performed -= OnPrimaryActionTriggered;
-        primaryButtonAction.action.canceled -= OnPrimaryActionLeft;
     }
 
     private void Update()
     {
         blinkerHandler.Update();
-        if (canWeld && weldDragpoint != null && isWelding && isGasOn)
+
+        if (ShouldPerformWelding())
         {
-            Vector3 newPosition = new Vector3(transform.position.x, weldDragpoint.position.y, weldDragpoint.position.z);
-            weldDragpoint.position = newPosition;
+            AlignWeldDragPoint();
         }
-        else if (weldDragpoint != null)
+        else
         {
-            weldDragpoint.GetComponent<ParticleSystem>().Stop();
-            weldDragpoint.GetComponent<ParticleSystem>().Clear();
+            StopWeldParticles();
         }
     }
 
@@ -56,9 +60,11 @@ public class WeldHandler : MonoBehaviour
     {
         if (other.TryGetComponent<WeldZoneHandler>(out weldZoneHandler) && isGasOn)
         {
-            weldZoneHandler.EnableWeld(currentPowerLevel);
-            weldDragpoint = weldZoneHandler.GetDragPoint();
             canWeld = true;
+
+            weldZoneHandler.EnableWeld(currentPowerLevel);
+            weldDragPoint = weldZoneHandler.GetDragPoint();
+            weldParticles = weldDragPoint.GetComponent<ParticleSystem>();
         }
     }
 
@@ -66,10 +72,39 @@ public class WeldHandler : MonoBehaviour
     {
         if (other.TryGetComponent<WeldZoneHandler>(out weldZoneHandler))
         {
-            weldDragpoint?.GetComponent<ParticleSystem>().Stop();
-            weldDragpoint?.GetComponent<ParticleSystem>().Clear();
-            weldDragpoint = null;
+            StopWeldParticles();
+            weldDragPoint = null;
+            weldParticles = null;
+
             canWeld = false;
+        }
+    }
+
+    private bool ShouldPerformWelding()
+    {
+        return canWeld && weldDragPoint != null && isWelding && isGasOn;
+    }
+
+    private void AlignWeldDragPoint()
+    {
+        Vector3 position = weldDragPoint.position;
+        weldDragPoint.position = new Vector3(transform.position.x, position.y, position.z);
+    }
+
+    private void PlayWeldParticles()
+    {
+        if (weldParticles != null && !weldParticles.isPlaying)
+        {
+            weldParticles.Play();
+        }
+    }
+
+    private void StopWeldParticles()
+    {
+        if (weldParticles != null)
+        {
+            weldParticles.Stop();
+            weldParticles.Clear();
         }
     }
 
@@ -78,14 +113,11 @@ public class WeldHandler : MonoBehaviour
         isWelding = true;
         if (isGasOn && canWeld)
         {
-            weldDragpoint.GetComponent<ParticleSystem>().Play();
+            PlayWeldParticles();
         }
     }
 
-    private void OnPrimaryActionLeft(InputAction.CallbackContext callbackContext)
-    {
-        isWelding = false;
-    }
+    private void OnPrimaryActionReleased(InputAction.CallbackContext callbackContext) => isWelding = false;
 
     private void OnPowerLevelChanged(PowerLevel powerLevel)
     {

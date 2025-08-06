@@ -1,6 +1,3 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class WeldZoneHandler : MonoBehaviour
@@ -9,12 +6,13 @@ public class WeldZoneHandler : MonoBehaviour
     [SerializeField] private Transform weldStartPoint;
     [SerializeField] private Transform smallWeldPrefab;
     [SerializeField] private Transform bigWeldPrefab;
+
     private Transform currentWeldPrefab;
+    private PowerLevel currentPowerLevel;
 
     private Vector3 initialScale;
     private Vector3 initialBigScale;
     private Vector3 initialSmallScale;
-    private PowerLevel currentPowerLevel;
 
     private void Start()
     {
