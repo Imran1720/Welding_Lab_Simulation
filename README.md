@@ -1,39 +1,51 @@
 # 🔧 VR Welding Simulation
 
-Candidate Name: Shaik Imran Ali
-Brief Description:
+### Candidate Name: 
+Shaik Imran Ali<br>
+### Brief Description:<br>
 A simple VR-based welding simulation built in Unity using **XR Interaction Toolkit** and **XR Device Simulator** (no actual VR headset required). The simulation covers the basic steps of manual welding: toggling gas, adjusting power, grabbing the torch and simple welding plates.
 
 > ⚠️ **Deadline:** August 6th, 2025 (End of Day)
 ---
 ## Demo
 
+![Video]()
+
 ## External Assests
-  
-  TDG Storage Solutions
-  ![Checkout](https://assetstore.unity.com/packages/3d/props/tdg-storage-solutions-252198)
+
+ ![TDG Storage Solutions](https://assetstore.unity.com/packages/3d/props/tdg-storage-solutions-252198)
 
 ## Project Approach Summary
 
 For this welding simulation, I focused on creating an interactive VR welding system using Unity and the XR Interaction Toolkit.
 The system is built around two main components:
 
-WeldHandler – Controls welding logic, listens to VR controller input (InputActionProperty), and handles the start/stop of the welding process, including activating particle effects and aligning the weld drag point during the operation.
+<ol>
+  <li>
+  <b>WeldHandler</b> – Controls welding logic, listens to VR controller input (<b>InputActionProperty</b>), and handles the start/stop of the welding process, including activating particle effects and aligning the weld drag point during the operation.
+  </li>
+  <li>
+   <b>WeldZoneHandler</b> – Manages the weldable area, dynamically positions and scales the weld mesh (small or big) based on the user’s current power level and the distance between the start and drag points.
+  </li>
+</ol>
+<b>The welding flow is event-driven:</b>
+<ul>
+  <li>
+    <b>Gas On</b> and <b>Power Level</b> changes are handled via a central <b>WeldSimulationService</b> event system.
+  </li>
+  <li>
+    On entering a weld zone (<b>OnTriggerEnter</b>), the system caches the drag point and enables welding visuals.
+  </li>
+  <li>
+    When the primary weld button is pressed, particle effects start; releasing the button stops them.
+  </li>
+  <li>
+    The weld mesh continuously updates based on the drag point’s movement.
+  </li>  
+</ul>
 
-WeldZoneHandler – Manages the weldable area, dynamically positions and scales the weld mesh (small or big) based on the user’s current power level and the distance between the start and drag points.
-
-The welding flow is event-driven:
-
-Gas On and Power Level changes are handled via a central WeldSimulationService event system.
-
-On entering a weld zone (OnTriggerEnter), the system caches the drag point and enables welding visuals.
-
-When the primary weld button is pressed, particle effects start; releasing the button stops them.
-
-The weld mesh continuously updates based on the drag point’s movement.
-
-Development Challenge
-Due to the absence of a VR headset for testing, I relied entirely on the XR Device Simulator in Unity for development. While this allowed for basic interaction testing, some trigger events (especially physics-based collider triggers in VR hand controllers) could not be fully verified in real headset conditions. This means certain input or collider behaviors may need adjustment once tested on the actual target hardware.
+<b>Development Challenge</b>
+Due to the absence of a <b>VR headset</b> for testing, I relied entirely on the XR Device Simulator in Unity for development. While this allowed for basic interaction testing, some trigger events (especially physics-based collider triggers in VR hand controllers) could not be fully verified in real headset conditions. This means certain input or collider behaviors may need adjustment once tested on the actual target hardware.
 
 
 ## 📌 Core Features Checklist
