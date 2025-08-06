@@ -1,4 +1,4 @@
-# 🔧 VR Welding Simulation
+# 🔧 VR Welding Lab Simulation
 
 ### Candidate Name: 
 Shaik Imran Ali<br>
