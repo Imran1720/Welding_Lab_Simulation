@@ -33,9 +33,8 @@ public class WeldSimulationService : MonoBehaviour
     {
         powerRegulatorHandler.RemoveEvents(eventService);
     }
+
     public void BlinkGasKnob() => gasKnobHandler.StartBlinking();
-
     public EventService GetEventService() => eventService;
-
     public GasKnobHandler GetGasKnobHandler() => gasKnobHandler;
 }

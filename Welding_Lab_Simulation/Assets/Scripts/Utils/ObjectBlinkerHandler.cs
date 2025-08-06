@@ -9,22 +9,22 @@ public class ObjectBlinkerHandler
     private float timer;
     private float blinkInterval;
 
-    private Material defaultMaterial;
     private Material highlightMaterial;
-    private MeshRenderer meshRenderer;
+    private List<MeshRenderer> meshRendererList;
+    private Material defaultMaterial;
 
     public ObjectBlinkerHandler(BlinkHandlerData data)
     {
-        meshRenderer = data.renderer;
+        meshRendererList = data.rendererlist;
         this.blinkInterval = data.duration;
         this.totalBlinks = data.blinkCount * 2;
-        defaultMaterial = data.renderer.material;
+        defaultMaterial = data.defaultMaterial;
         this.highlightMaterial = data.highlightMaterial;
     }
 
     public void Update()
     {
-        if (remainingBlinks <= 0 || meshRenderer == null) return;
+        if (remainingBlinks <= 0 || meshRendererList.Count <= 0) return;
 
         timer -= Time.deltaTime;
 
@@ -41,7 +41,10 @@ public class ObjectBlinkerHandler
         if (defaultMaterial == null || highlightMaterial == null) return;
 
         bool useDefault = remainingBlinks % 2 == 0;
-        meshRenderer.material = useDefault ? defaultMaterial : highlightMaterial;
+        for (int i = 0; i < meshRendererList.Count; i++)
+        {
+            meshRendererList[i].material = useDefault ? defaultMaterial : highlightMaterial;
+        }
     }
 
     public void StartBlinking()
@@ -54,6 +57,9 @@ public class ObjectBlinkerHandler
     {
         timer = 0;
         remainingBlinks = 0;
-        meshRenderer.material = defaultMaterial;
+        for (int i = 0; i < meshRendererList.Count; i++)
+        {
+            meshRendererList[i].material = defaultMaterial;
+        }
     }
 }
