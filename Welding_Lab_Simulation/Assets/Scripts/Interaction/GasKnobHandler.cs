@@ -13,6 +13,7 @@ public class GasKnobHandler : MonoBehaviour
 
     private ObjectBlinkerHandler blinker;
     private ToggleState currentToggleState;
+    private EventService eventService;
 
     private void Start()
     {
@@ -46,9 +47,11 @@ public class GasKnobHandler : MonoBehaviour
         delta = isGasOn ? 1 : -1;
         rotationtimer = rotationduration;
         currentToggleState = isGasOn ? ToggleState.ON : ToggleState.OFF;
+
+        eventService.GasOnTrigger.InvokeEvent(isGasOn);
     }
 
-    public void StopRotation() => rotationtimer = 0;
+    public void InitializeEvents(EventService eventService) => this.eventService = eventService;
     public void StartBlinking() => blinker.StartBlinking();
     public ToggleState GetToggleState() => currentToggleState;
 }

@@ -4,12 +4,10 @@ using UnityEngine;
 
 public class EventService
 {
-    public EventController gasKnobToggled;
-    public EventController<bool> InteractingWithKnob;
+    public EventController<bool> GasOnTrigger;
 
     public EventService()
     {
-        gasKnobToggled = new EventController();
-        InteractingWithKnob = new EventController<bool>();
+        GasOnTrigger = new EventController<bool>();
     }
 }
