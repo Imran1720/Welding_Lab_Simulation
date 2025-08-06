@@ -18,8 +18,8 @@ Each functionality below will be implemented in a **separate branch**. Once comp
 ---
 
 ### ✅ System: Environment Setup
-- [ ] Metal table with two metal plates positioned
-- [ ] Player spawn point & workspace area
+- [x] Metal table with two metal plates positioned
+- [x] Player spawn point & workspace area
 
 ---
 
