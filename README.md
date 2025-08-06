@@ -9,11 +9,11 @@ A simple VR-based welding simulation built in Unity using **XR Interaction Toolk
 ---
 ## Demo
 
-![Video]()
+[![Watch the video](https://img.youtube.com/vi/j0jTQfTYOkw/maxresdefault.jpg)](https://youtu.be/j0jTQfTYOkw)
 
 ## External Assests
 
- ![TDG Storage Solutions](https://assetstore.unity.com/packages/3d/props/tdg-storage-solutions-252198)
+ <a href="https://assetstore.unity.com/packages/3d/props/tdg-storage-solutions-252198" target="_blank">TDG Storage Solutions </a>
 
 ## Project Approach Summary
 
