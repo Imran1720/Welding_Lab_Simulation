@@ -3,7 +3,12 @@ guid: 135782b9024d8274d9dda9bc90a93b89
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: butle
+    second: {fileID: 2100000, guid: ed56cd885ec9ddd40bdd7440e456021a, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
