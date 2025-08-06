@@ -76,14 +76,16 @@ public class PowerRegulatorHandler : MonoBehaviour
     {
         if (!isGasOn)
         {
-            WeldSimulationService.Instance.BlinkGasKnob();
+            BlinkGasKnob();
             return;
         }
         currentPowerLevel++;
+
         if ((int)currentPowerLevel > 2)
         {
             currentPowerLevel = 0;
         }
+        WeldSimulationService.Instance.GetEventService().OnPowerLevelChanged.InvokeEvent(currentPowerLevel);
     }
 
     private void GasOnTriggered(bool isGasOn) => this.isGasOn = isGasOn;
@@ -91,5 +93,4 @@ public class PowerRegulatorHandler : MonoBehaviour
 
     public void StopRegulatorBlinking() => blinkerHandler.StopBlinking();
     public void BlinkGasKnob() => WeldSimulationService.Instance.BlinkGasKnob();
-
 }

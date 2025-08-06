@@ -38,7 +38,7 @@ public class GasKnobHandler : MonoBehaviour
 
     private void RotateKnob()
     {
-        transform.Rotate(0f, 0f, rotationSpeed * Time.deltaTime * delta, Space.Self);
+        transform.Rotate(0f, rotationSpeed * Time.deltaTime * delta, 0f, Space.Self);
     }
 
     public void ToggleGas()
