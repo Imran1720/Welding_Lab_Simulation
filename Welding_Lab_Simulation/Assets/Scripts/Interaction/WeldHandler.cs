@@ -7,6 +7,7 @@ using UnityEngine.XR;
 public class WeldHandler : MonoBehaviour
 {
     private Transform weldDragpoint;
+    [SerializeField] private BlinkHandlerData blinkHandlerData;
     [SerializeField] private InputActionProperty primaryButtonAction;
     private PowerLevel currentPowerLevel;
     private WeldZoneHandler weldZoneHandler;
@@ -14,9 +15,12 @@ public class WeldHandler : MonoBehaviour
     private bool canWeld;
     private bool isWelding = false;
     private bool isGasOn = false;
+    private ObjectBlinkerHandler blinkerHandler;
 
     private void Start()
     {
+        blinkerHandler = new ObjectBlinkerHandler(blinkHandlerData);
+
         WeldSimulationService.Instance.GetEventService().OnPowerLevelChanged.AddEventListener(OnPowerLevelChanged);
         WeldSimulationService.Instance.GetEventService().GasOnTrigger.AddEventListener(GasOnTriggered);
     }
@@ -35,6 +39,7 @@ public class WeldHandler : MonoBehaviour
 
     private void Update()
     {
+        blinkerHandler.Update();
         if (canWeld && weldDragpoint != null && isWelding && isGasOn)
         {
             Vector3 newPosition = new Vector3(transform.position.x, weldDragpoint.position.y, weldDragpoint.position.z);
@@ -61,6 +66,8 @@ public class WeldHandler : MonoBehaviour
     {
         if (other.TryGetComponent<WeldZoneHandler>(out weldZoneHandler))
         {
+            weldDragpoint?.GetComponent<ParticleSystem>().Stop();
+            weldDragpoint?.GetComponent<ParticleSystem>().Clear();
             weldDragpoint = null;
             canWeld = false;
         }
@@ -86,5 +93,9 @@ public class WeldHandler : MonoBehaviour
         weldZoneHandler?.DisableWeld();
     }
 
-    private void GasOnTriggered(bool value) => isGasOn = value;
+    private void GasOnTriggered(bool value)
+    {
+        isGasOn = value;
+        blinkerHandler.StartBlinking();
+    }
 }
