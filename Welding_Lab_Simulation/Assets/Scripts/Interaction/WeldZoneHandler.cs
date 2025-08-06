@@ -2,10 +2,13 @@ using UnityEngine;
 
 public class WeldZoneHandler : MonoBehaviour
 {
+    [Header("Weld Points")]
     [SerializeField] private Transform weldDragPoint;
     [SerializeField] private Transform weldStartPoint;
-    [SerializeField] private Transform smallWeldPrefab;
+
+    [Header("Prefabs")]
     [SerializeField] private Transform bigWeldPrefab;
+    [SerializeField] private Transform smallWeldPrefab;
 
     private Transform currentWeldPrefab;
     private PowerLevel currentPowerLevel;
@@ -18,8 +21,9 @@ public class WeldZoneHandler : MonoBehaviour
     {
         initialBigScale = bigWeldPrefab.transform.localScale;
         initialSmallScale = smallWeldPrefab.transform.localScale;
-        smallWeldPrefab.gameObject.SetActive(false);
+
         bigWeldPrefab.gameObject.SetActive(false);
+        smallWeldPrefab.gameObject.SetActive(false);
     }
 
     private void Update()
@@ -37,15 +41,7 @@ public class WeldZoneHandler : MonoBehaviour
 
     private Transform GetWeldPrefab(PowerLevel level)
     {
-        switch (level)
-        {
-            case PowerLevel.MEDIUM:
-            case PowerLevel.LOW:
-            default:
-                return smallWeldPrefab;
-            case PowerLevel.HIGH:
-                return bigWeldPrefab;
-        }
+        return level == PowerLevel.HIGH ? bigWeldPrefab : smallWeldPrefab;
     }
 
     private void UpdateTransformForWeld(Transform weldPrefab)
@@ -60,18 +56,10 @@ public class WeldZoneHandler : MonoBehaviour
         weldPrefab.forward = rotation;
     }
 
-
     public void EnableWeld(PowerLevel powerLevel)
     {
         currentPowerLevel = powerLevel;
-        if (powerLevel == PowerLevel.MEDIUM || powerLevel == PowerLevel.LOW)
-        {
-            initialScale = initialSmallScale;
-        }
-        else
-        {
-            initialScale = initialBigScale;
-        }
+        initialScale = powerLevel == PowerLevel.HIGH ? initialBigScale : initialSmallScale;
         currentWeldPrefab.gameObject.SetActive(true);
     }
 
