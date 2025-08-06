@@ -5,7 +5,6 @@ Shaik Imran Ali<br>
 ### Brief Description:<br>
 A simple VR-based welding simulation built in Unity using **XR Interaction Toolkit** and **XR Device Simulator** (no actual VR headset required). The simulation covers the basic steps of manual welding: toggling gas, adjusting power, grabbing the torch and simple welding plates.
 
-> ⚠️ **Deadline:** August 6th, 2025 (End of Day)
 ---
 ## Demo
 
