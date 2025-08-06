@@ -37,11 +37,11 @@ Each functionality below will be implemented in a **separate branch**. Once comp
 ---
 
 ### ✅ System: Welding Torch
-- [ ] Torch is XR Grabbable
-- [ ] Trigger starts welding only if:
+- [x] Torch is XR Grabbable
+- [x] Trigger starts welding only if:
   - Gas is ON
   - Torch is in valid range
-- [ ] Basic particle effect (sparks)
+- [x] Basic particle effect (sparks)
 
 ---
 
